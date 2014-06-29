@@ -1,7 +1,7 @@
 ## Some regular expression operators for Swift
 
-It is with a certain hesitance I post a project based on "Operator Overloading"
-(generally considered by the programing cognisente as being "Unsafe at any speed") the
+It's with a certain hesitance I post a project based on "Operator Overloading"
+(generally considered by the programing cognisente as "Unsafe at any speed") but the
 absence of direct support for regular expressions in Swift provides an excuse to explore 
 the terrain. While "NSRegularExpression" is powerful and complete, 
 by the time you fire up an instance up and puzzle out the api the focus has been taken 
