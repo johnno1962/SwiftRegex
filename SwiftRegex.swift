@@ -13,16 +13,6 @@ import Foundation
 
 var swiftRegexCache = Dictionary<String,NSRegularExpression>()
 
-extension NSRange {
-    func regexFound() -> Bool {
-        return location != NSNotFound
-    }
-}
-
-func RegexMutable(string: NSString) -> NSMutableString {
-    return NSMutableString.stringWithString(string)
-}
-
 class SwiftRegex: NSObject {
 
     var target: NSString
@@ -55,8 +45,8 @@ class SwiftRegex: NSObject {
         return NSRange(location: 0,length: target.length)
     }
 
-    func substring(range: NSRange) -> String! {
-        if ( range.regexFound() ) {
+    func substring(range: NSRange) -> NSString! {
+        if ( range.location != NSNotFound ) {
             return target.substringWithRange(range)
         } else {
             return nil
@@ -64,7 +54,7 @@ class SwiftRegex: NSObject {
     }
 
     func doesMatch(options: NSMatchingOptions = nil) -> Bool {
-        return range(options: options).regexFound()
+        return range(options: options).location != NSNotFound
     }
 
     func range(options: NSMatchingOptions = nil) -> NSRange {
@@ -83,11 +73,10 @@ class SwiftRegex: NSObject {
         if match {
             var groups = Array<String>()
             for group in 0...regex.numberOfCaptureGroups {
-                var groupRange = match.rangeAtIndex(group)
-                if ( groupRange.regexFound() ) {
-                    groups.append( substring(groupRange) )
+                if let group = substring(match.rangeAtIndex(group)) {
+                    groups += group
                 } else {
-                    groups.append( "_" ) // avoids bridging problems
+                    groups += "_" // avoids bridging problems
                 }
             }
             return groups
@@ -211,6 +200,10 @@ extension String {
     subscript(pattern: String) -> SwiftRegex {
         return SwiftRegex(target: self, pattern: pattern)
     }
+}
+
+func RegexMutable(string: NSString) -> NSMutableString {
+    return NSMutableString.stringWithString(string)
 }
 
 func ~= (left: SwiftRegex, right: String) -> NSMutableString {

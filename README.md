@@ -38,7 +38,7 @@ The SwiftRegex class provides a matches() method and a __conversion() -> String[
 method which which calls matches() to convert itself into the desired result.
 
 Assignment to this new regular expression entity is a little more problematic. Swift 
-doesn't' give you control the assignment operator itself so I've had to ram raid
+doesn't' give you control the assignment operator itself so I've had to repurpose
 the "~=" compound operator (it is the "pattern matching" operator after all) so
 the first iteration is:
 
@@ -48,6 +48,10 @@ The input string is captured by reference so were it to be mutable the operation
 be performed in place. A global function RegexMutable() is defined as shorthand to 
 convert an input string into an NSMutableString under the covers so the above code
 can become:
+
+    func RegexMutable(string: NSString) -> NSMutableString {
+        return NSMutableString.stringWithString(string)
+    }
 
 	var mutable  = RegexMutable( input )
 	
