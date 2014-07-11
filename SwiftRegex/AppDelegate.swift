@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let input = "Now is the time for all good men to come to the aid of the party"
 
-        let words:String[] = input["(\\w+)"]
+        let words:[String] = input["(\\w+)"]
+        //let groups:[[String]] = input["(\\w)(\\w+)"]
 
         var output = input["men"] ~= "people"
 
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // "Now is the time for all great folk to come to the aid of their country"
 
-        mutable["(\\w)(\\w+)"] ~= {
+        mutable["\\w+"] ~= {
             (match: String) in
             return match.uppercaseString
         }
@@ -48,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // "NOW IS THE TIME FOR ALL GREAT FOLK TO COME TO THE AID OF THEIR COUNTRY"
 
         mutable["(\\w)(\\w+)"] ~= {
-            (groups: String[]) in
+            (groups: [String]) in
             return groups[1]+groups[2].lowercaseString
         }
 
