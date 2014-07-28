@@ -10,11 +10,11 @@ import UIKit
 
 class ViewController: UIViewController, UITextViewDelegate {
                             
-    @IBOutlet var input : UITextView = nil
-    @IBOutlet var regex : UITextField = nil
-    @IBOutlet var groups : UITextView = nil
-    @IBOutlet var replace : UITextField = nil
-    @IBOutlet var result : UITextView = nil
+    @IBOutlet var input : UITextView!
+    @IBOutlet var regex : UITextField!
+    @IBOutlet var groups : UITextView!
+    @IBOutlet var replace : UITextField!
+    @IBOutlet var result : UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

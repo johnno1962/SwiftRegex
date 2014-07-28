@@ -19,15 +19,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // for usage see SwiftRegexTests and ViewController
 
         let input = "Now is the time for all good men to come to the aid of the party"
+        //let mtbl:NSMutableString = input
 
         let words:[String] = input["(\\w+)"]
-        //let groups:[[String]] = input["(\\w)(\\w+)"]
+        let groups:[[String]] = input["(\\w)(\\w+)"]
+
+        println(words)
+        println(groups)
+
+        if input["good"] {
+            println("good")
+        }
 
         var output = input["men"] ~= "people"
 
         println(output)
 
-        var mutable  = RegexMutable( input )
+        var mutable = RegexMutable( input )
 
         mutable["men"] ~= "folk"
         mutable["the party"] ~= "their country"
@@ -57,8 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // "Now Is The Time For All Great Folk To Come To The Aid Of Their Country"
 
         let props = "name1=value1\nname2='value2\nvalue2\n'\n"
-        let dict = props["(\\w+)=('[^']*'|.*)"].dictionary()
+        let dict:[String:String] = props["(\\w+)=('[^']*'|.*)"]
         // ["name1": "value1", "name2": "'value2\nvalue2\n'"]
+
+        println(dict)
 
         return true
     }

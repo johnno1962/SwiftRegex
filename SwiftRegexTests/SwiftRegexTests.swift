@@ -34,7 +34,7 @@ class SwiftRegexTests: XCTestCase {
             XCTAssert(true, "non-match pass");
         }
 
-        var match:String[] = input["the .* dog"]
+        var match:[String] = input["the .* dog"]
         XCTAssert(match==["the lazy dog"], "convert pass")
 
         XCTAssert(input["quick brown (\\w+)"][1] == "fox", "group subscript");
@@ -54,7 +54,7 @@ class SwiftRegexTests: XCTestCase {
         XCTAssert(minput == "The quick brown fox jumps over the very lazy brown dog.", "replace array pass");
 
         minput["(\\w)(\\w+)"] ~= {
-            (groups: String[]) in
+            (groups: [String]) in
             return groups[1].uppercaseString+groups[2]
         }
 
