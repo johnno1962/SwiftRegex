@@ -112,6 +112,47 @@ One final conversion is available, that to a dictionary:
 
 At which point this almost begins to look useful..
 
+### Threading operators
+
+As a special bonus I've added in my take on Josh Smith's 
+[custom threading operators](http://ijoshsmith.com/2014/07/05/custom-threading-operator-in-swift/)
+for background process (adding dispatch groups.) The syntax is taken from UNIX shell.
+For example, the following processes the first group in a background thread then
+passes the result back to the main thread to print it out:
+
+    {
+        // async background
+        return 99
+    } | {
+        // main thread again
+        (result:Int) in
+        println("\(result)")
+    };
+
+This works for thread groups as well where multiple blocks are executed in 
+parallel again following shell syntax where multiple parallel blocks are
+separated by the & operator. The array of their results are passed back 
+to the main thread using the pipe operator as before:
+
+    {
+        // thread 1
+        return 77
+    } & {
+        // thread 2
+        return 88
+    } & {
+        // thread 3
+        return 99
+    } | {
+        // main thread
+        (results:[Int!]) in
+        println("\(results)")
+    };
+
+There are also & and | operators for when no value is passed between the blocks.
+The semicolon is necessary as is one on the line previous to using these
+operators.
+
 ### The License
 
 This code is in the Public Domain subject to the usual disclaimer:

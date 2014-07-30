@@ -5,6 +5,8 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#32 $
+//
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
 //
@@ -41,7 +43,7 @@ public class SwiftRegex: NSObject, LogicValue {
         //assert(false,"SwiftRegex: failed")
     }
 
-    var targetRange: NSRange {
+    final var targetRange: NSRange {
         return NSRange(location: 0,length: target.length)
     }
 
@@ -207,7 +209,7 @@ extension String {
 }
 
 public func RegexMutable(string: NSString) -> NSMutableString {
-    return NSMutableString.stringWithString(string)
+    return NSMutableString(string:string)
 }
 
 public func ~= (left: SwiftRegex, right: String) -> NSMutableString {
@@ -245,3 +247,80 @@ public func ~= (left: SwiftRegex, right: ([String]) -> String) -> NSMutableStrin
         return right(left.groupsForMatch(match))
     }
 }
+
+// my take on custom threading operators from
+// http://ijoshsmith.com/2014/07/05/custom-threading-operator-in-swift/
+
+private let _queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+
+public func | (left: () -> Void, right: () -> Void) {
+    dispatch_async(_queue) {
+        left()
+        dispatch_async(dispatch_get_main_queue(), right)
+    }
+}
+
+public func | <R> (left: () -> R, right: (result:R) -> Void) {
+    dispatch_async(_queue) {
+        let result = left()
+        dispatch_async(dispatch_get_main_queue(), {
+            right(result:result)
+        })
+    }
+}
+
+// dispatch groups { block } & { block } | { completion }
+public func & (left: () -> Void, right: () -> Void) -> Array<() -> Void> {
+    return [left, right];
+}
+
+public func & (left: Array<() -> Void>, right: () -> Void) -> Array<() -> Void> {
+    var out = left
+    out += right
+    return out
+}
+
+public func | (left: Array<() -> Void>, right: () -> Void) {
+    let group = dispatch_group_create()
+
+    for block in left {
+        dispatch_group_async(group, _queue, block)
+    }
+
+    dispatch_group_notify(group, dispatch_get_main_queue(), right)
+}
+
+// parallel blocks with returns
+public func & <R> (left: () -> R, right: () -> R) -> Array<() -> R> {
+    return [left, right]
+}
+
+public func & <R> (left: Array<() -> R>, right: () -> R) -> Array<() -> R> {
+    var out = left
+    out += right
+    return out
+}
+
+public func | <R> (left: Array<() -> R>, right: (results:[R!]) -> Void) {
+    let group = dispatch_group_create()
+
+    var results = Array<R!>()
+    for t in 0..<left.count {
+        results += nil
+    }
+
+    for t in 0..<left.count {
+        dispatch_retain(group)
+        dispatch_group_enter(group)
+        dispatch_async(_queue, {
+            results[t] = left[t]()
+            dispatch_group_leave(group)
+            dispatch_release(group)
+        })
+    }
+
+    dispatch_group_notify(group, dispatch_get_main_queue(), {
+        right(results: results)
+    })
+}
+

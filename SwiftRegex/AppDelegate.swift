@@ -70,6 +70,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         println(dict)
 
+        var i = 0;
+
+        {
+            println("Task #1")
+            for var i=0 ; i<10000000 ; i++ {
+            }
+            println("\(i++)")
+        } & {
+            println("Task #2")
+            for var i=0 ; i<20000000 ; i++ {
+            }
+            println("\(i++)")
+        } & {
+            println("Task #3")
+            for var i=0 ; i<30000000 ; i++ {
+            }
+            println("\(i++)")
+        } | {
+            println("Completed \(i)")
+        };
+
+        {
+            return 99
+        } | {
+            (result:Int) in
+            println("\(result)")
+        };
+
+        {
+            return 88
+        } & {
+            return 99
+        } | {
+            (results:[Int!]) in
+            println("\(results)")
+        };
+
         return true
     }
 

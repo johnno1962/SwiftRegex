@@ -45,7 +45,7 @@ class SwiftRegexTests: XCTestCase {
         XCTAssert(groups == [["The quick brown fox", "quick brown", "fox"],
                              ["the lazy dog", "lazy", "dog"]], "groups match");
 
-        let minput = RegexMutable(input)
+        let minput = NSMutableString(string:input)
 
         minput["(the) (\\w+)"] ~= "$1 very $2"
         XCTAssert(minput == "The quick brown fox jumps over the very lazy dog.", "replace pass");
