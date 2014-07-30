@@ -3,9 +3,11 @@
 It's with a certain hesitance I post a project based on "Operator Overloading"
 (generally considered by the programing cognisente as "Unsafe at any speed") but the
 absence of direct support for regular expressions in Swift provides an excuse to explore 
-the terrain. While "NSRegularExpression" is powerful and complete, 
+the terrain (there are also interesting things you can do with threading operators
+added further down.) While "NSRegularExpression" is powerful and complete, 
 by the time you fire up an instance up and puzzle out the api the focus has been taken 
-so far away from the expression itself it is seldom the concise solution it should be.
+so far away from the expression itself it is seldom the concise solution to a particular
+class of problem that it should be.
 
 The two new operators defined start with a very basic premise. In the same way that subscripting
 into a collection such as an array specifies the address or range on which an operation
@@ -50,10 +52,10 @@ convert an input string into an NSMutableString under the covers so the above co
 can become:
 
     func RegexMutable(string: NSString) -> NSMutableString {
-        return NSMutableString.stringWithString(string)
+        return NSMutableString(string:string)
     }
 
-	var mutable  = RegexMutable( input )
+	var mutable = RegexMutable( input )
 	
 	mutable["men"] ~= "folk"
 	mutable["the party"] ~= "their country"
@@ -106,15 +108,15 @@ One final conversion is available, that to a dictionary:
 
 	let props = "name1=value1\nname2='value2\nvalue3\n'\n"
 
-	let dict = props["(\\w+)=('[^']*'|.*)"].dictionary()
+    let dict:[String:String] = props["(\\w+)=('[^']*'|.*)"]
 
 	// ["name1": "value1", "name2": "'value2\nvalue3\n'"]
 
 At which point this almost begins to look useful..
 
-### Threading operators
+### Some threading operators
 
-As a special bonus I've added in my take on Josh Smith's 
+As an excercise I've added in my take on Josh Smith's 
 [custom threading operators](http://ijoshsmith.com/2014/07/05/custom-threading-operator-in-swift/)
 for background process (adding dispatch groups.) The syntax is taken from UNIX shell.
 For example, the following processes the first group in a background thread then

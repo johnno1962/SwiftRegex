@@ -154,17 +154,16 @@ public class SwiftRegex: NSObject, LogicValue {
         }
     }
 
-    // only first type seems to work
+    public func __conversion() -> Bool {
+        return doesMatch()
+    }
+
     public func __conversion() -> NSRange {
         return range()
     }
 
     public func __conversion() -> String {
         return match()
-    }
-
-    public func __conversion() -> Bool {
-        return doesMatch()
     }
 
     public func __conversion() -> [String] {
@@ -175,7 +174,7 @@ public class SwiftRegex: NSObject, LogicValue {
         return allGroups()
     }
 
-    public func __conversion() -> Dictionary<String,String> {
+    public func __conversion() -> [String:String] {
         return dictionary()
     }
 
