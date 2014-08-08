@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#32 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#34 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -15,7 +15,7 @@ import Foundation
 
 var swiftRegexCache = Dictionary<String,NSRegularExpression>()
 
-public class SwiftRegex: NSObject, LogicValue {
+public class SwiftRegex: NSObject, BooleanType {
 
     var target: NSString
     var regex: NSRegularExpression
@@ -47,7 +47,7 @@ public class SwiftRegex: NSObject, LogicValue {
         return NSRange(location: 0,length: target.length)
     }
 
-    func substring(range: NSRange) -> NSString! {
+    final func substring(range: NSRange) -> NSString! {
         if ( range.location != NSNotFound ) {
             return target.substringWithRange(range)
         } else {
@@ -75,10 +75,10 @@ public class SwiftRegex: NSObject, LogicValue {
         if match {
             var groups = [String]()
             for groupno in 0...regex.numberOfCaptureGroups {
-                if let group = substring(match.rangeAtIndex(groupno)) {
-                    groups += group
+                if let group = substring(match.rangeAtIndex(groupno)) as String! {
+                    groups += [group]
                 } else {
-                    groups += "_" // avoids bridging problems
+                    groups += ["_"] // avoids bridging problems
                 }
             }
             return groups
@@ -129,13 +129,13 @@ public class SwiftRegex: NSObject, LogicValue {
         return out
     }
 
-    func substituteMatches(substitution: (NSTextCheckingResult, UnsafePointer<ObjCBool>) -> String,
+    func substituteMatches(substitution: (NSTextCheckingResult, UnsafeMutablePointer<ObjCBool>) -> String,
                                 options:NSMatchingOptions = nil) -> NSMutableString {
         let out = NSMutableString()
         var pos = 0
 
         regex.enumerateMatchesInString(target, options: options, range: targetRange ) {
-            (match: NSTextCheckingResult!, flags: NSMatchingFlags, stop: UnsafePointer<ObjCBool>) in
+            (match: NSTextCheckingResult!, flags: NSMatchingFlags, stop: UnsafeMutablePointer<ObjCBool>) in
 
             let matchRange = match.range
             out.appendString( self.substring( NSRange(location:pos, length:matchRange.location-pos) ) )
@@ -178,7 +178,7 @@ public class SwiftRegex: NSObject, LogicValue {
         return dictionary()
     }
 
-    public func getLogicValue() -> Bool {
+    public var boolValue: Bool {
         return doesMatch()
     }
 }
@@ -213,7 +213,7 @@ public func RegexMutable(string: NSString) -> NSMutableString {
 
 public func ~= (left: SwiftRegex, right: String) -> NSMutableString {
     return left.substituteMatches {
-        (match: NSTextCheckingResult, stop: UnsafePointer<ObjCBool>) in
+        (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         return left.regex.replacementStringForResult( match,
             inString: left.target, offset: 0, template: right )
     }
@@ -222,7 +222,7 @@ public func ~= (left: SwiftRegex, right: String) -> NSMutableString {
 public func ~= (left: SwiftRegex, right: [String]) -> NSMutableString {
     var matchNumber = 0
     return left.substituteMatches {
-        (match: NSTextCheckingResult, stop: UnsafePointer<ObjCBool>) in
+        (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
 
         if ++matchNumber == right.count {
             stop.memory = true
@@ -235,14 +235,14 @@ public func ~= (left: SwiftRegex, right: [String]) -> NSMutableString {
 
 public func ~= (left: SwiftRegex, right: (String) -> String) -> NSMutableString {
     return left.substituteMatches {
-        (match: NSTextCheckingResult, stop: UnsafePointer<ObjCBool>) in
+        (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         return right(left.substring(match.range))
     }
 }
 
 public func ~= (left: SwiftRegex, right: ([String]) -> String) -> NSMutableString {
     return left.substituteMatches {
-        (match: NSTextCheckingResult, stop: UnsafePointer<ObjCBool>) in
+        (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         return right(left.groupsForMatch(match))
     }
 }
@@ -269,17 +269,17 @@ public func | <R> (left: () -> R, right: (result:R) -> Void) {
 }
 
 // dispatch groups { block } & { block } | { completion }
-public func & (left: () -> Void, right: () -> Void) -> Array<() -> Void> {
+public func & (left: () -> Void, right: () -> Void) -> [() -> Void] {
     return [left, right];
 }
 
-public func & (left: Array<() -> Void>, right: () -> Void) -> Array<() -> Void> {
+public func & (left: [() -> Void], right: () -> Void) -> [() -> Void] {
     var out = left
-    out += right
+    out += [right]
     return out
 }
 
-public func | (left: Array<() -> Void>, right: () -> Void) {
+public func | (left: [() -> Void], right: () -> Void) {
     let group = dispatch_group_create()
 
     for block in left {
@@ -290,22 +290,22 @@ public func | (left: Array<() -> Void>, right: () -> Void) {
 }
 
 // parallel blocks with returns
-public func & <R> (left: () -> R, right: () -> R) -> Array<() -> R> {
+public func & <R> (left: () -> R, right: () -> R) -> [() -> R] {
     return [left, right]
 }
 
-public func & <R> (left: Array<() -> R>, right: () -> R) -> Array<() -> R> {
+public func & <R> (left: [() -> R], right: () -> R) -> [() -> R] {
     var out = left
-    out += right
+    out += [right]
     return out
 }
 
-public func | <R> (left: Array<() -> R>, right: (results:[R!]) -> Void) {
+public func | <R> (left: [() -> R], right: (results:[R!]) -> Void) {
     let group = dispatch_group_create()
 
     var results = Array<R!>()
     for t in 0..<left.count {
-        results += nil
+        results += [nil]
     }
 
     for t in 0..<left.count {
