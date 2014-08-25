@@ -17,7 +17,7 @@ good idea to be able to write the following in code:
 
 	let input = "Now is the time for all good men to come to the aid of the party"
 
-	let words:[String] = input["(\\w+)"]
+	let words:[String] = input["(\\w+)"].matches()
 
 	input["men"] = "people"
 
@@ -35,9 +35,6 @@ in the subscript.
 			return SwiftRegex(target: self, pattern: pattern)
 		}
 	}
-
-The SwiftRegex class provides a matches() method and a __conversion() -> String[]
-method which which calls matches() to convert itself into the desired result.
 
 Assignment to this new regular expression entity is a little more problematic. Swift 
 doesn't' give you control the assignment operator itself so I've had to repurpose
