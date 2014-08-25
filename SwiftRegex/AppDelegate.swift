@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let input = "Now is the time for all good men to come to the aid of the party"
         //let mtbl:NSMutableString = input
 
-        let words:[String] = input["(\\w+)"]
-        let groups:[[String]] = input["(\\w)(\\w+)"]
+        let words:[String] = input["(\\w+)"].matches()
+        let groups:[[String]] = input["(\\w)(\\w+)"].allGroups()
 
         println(words)
         println(groups)
@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // "Now Is The Time For All Great Folk To Come To The Aid Of Their Country"
 
         let props = "name1=value1\nname2='value2\nvalue2\n'\n"
-        let dict:[String:String] = props["(\\w+)=('[^']*'|.*)"]
+        let dict:[String:String] = props["(\\w+)=('[^']*'|.*)"].dictionary()
         // ["name1": "value1", "name2": "'value2\nvalue2\n'"]
 
         println(dict)

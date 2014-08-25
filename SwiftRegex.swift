@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#34 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#36 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -72,7 +72,7 @@ public class SwiftRegex: NSObject, BooleanType {
     }
 
     func groupsForMatch(match: NSTextCheckingResult!) -> [String]! {
-        if match {
+        if match != nil {
             var groups = [String]()
             for groupno in 0...regex.numberOfCaptureGroups {
                 if let group = substring(match.rangeAtIndex(groupno)) as String! {
@@ -153,7 +153,7 @@ public class SwiftRegex: NSObject, BooleanType {
             return out
         }
     }
-
+/* removed Beta6
     public func __conversion() -> Bool {
         return doesMatch()
     }
@@ -177,7 +177,7 @@ public class SwiftRegex: NSObject, BooleanType {
     public func __conversion() -> [String:String] {
         return dictionary()
     }
-
+*/
     public var boolValue: Bool {
         return doesMatch()
     }
@@ -275,7 +275,7 @@ public func & (left: () -> Void, right: () -> Void) -> [() -> Void] {
 
 public func & (left: [() -> Void], right: () -> Void) -> [() -> Void] {
     var out = left
-    out += [right]
+    out.append( right )
     return out
 }
 
@@ -296,7 +296,7 @@ public func & <R> (left: () -> R, right: () -> R) -> [() -> R] {
 
 public func & <R> (left: [() -> R], right: () -> R) -> [() -> R] {
     var out = left
-    out += [right]
+    out.append( right )
     return out
 }
 

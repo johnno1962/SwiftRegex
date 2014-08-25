@@ -34,7 +34,7 @@ class SwiftRegexTests: XCTestCase {
             XCTAssert(true, "non-match pass");
         }
 
-        var match:[String] = input["the .* dog"]
+        var match:[String] = input["the .* dog"].matches()
         XCTAssert(match==["the lazy dog"], "convert pass")
 
         XCTAssert(input["quick brown (\\w+)"][1] == "fox", "group subscript");

@@ -10,29 +10,29 @@
 	<string>SwiftRegex</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>B5AE55F9-8695-4D99-ADA2-16B51CA7AAE6</key>
+		<key>E3C6920151237B9199F20D0D6676D873AE14CC31</key>
 		<string>https://github.com/johnno1962/SwiftRegex.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>SwiftRegex.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>B5AE55F9-8695-4D99-ADA2-16B51CA7AAE6</key>
+		<key>E3C6920151237B9199F20D0D6676D873AE14CC31</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/johnno1962/SwiftRegex.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>B5AE55F9-8695-4D99-ADA2-16B51CA7AAE6</string>
+	<string>E3C6920151237B9199F20D0D6676D873AE14CC31</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B5AE55F9-8695-4D99-ADA2-16B51CA7AAE6</string>
+			<string>E3C6920151237B9199F20D0D6676D873AE14CC31</string>
 			<key>IDESourceControlWCCName</key>
 			<string>SwiftRegex</string>
 		</dict>
