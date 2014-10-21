@@ -14,7 +14,7 @@
 		<string>https://github.com/johnno1962/SwiftRegex.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>SwiftRegex.xcodeproj/project.xcworkspace</string>
+	<string>SwiftRegex.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E3C6920151237B9199F20D0D6676D873AE14CC31</key>

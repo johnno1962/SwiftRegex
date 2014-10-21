@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#36 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#37 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -26,7 +26,7 @@ public class SwiftRegex: NSObject, BooleanType {
             self.regex = regex
         } else {
             var error: NSError?
-            if let regex = NSRegularExpression.regularExpressionWithPattern(pattern, options:options, error:&error) {
+            if let regex = NSRegularExpression(pattern: pattern, options:options, error:&error) {
                 swiftRegexCache[pattern] = regex
                 self.regex = regex
             }
@@ -309,12 +309,12 @@ public func | <R> (left: [() -> R], right: (results:[R!]) -> Void) {
     }
 
     for t in 0..<left.count {
-        dispatch_retain(group)
+        //dispatch_retain(group)
         dispatch_group_enter(group)
         dispatch_async(_queue, {
             results[t] = left[t]()
             dispatch_group_leave(group)
-            dispatch_release(group)
+            //dispatch_release(group)
         })
     }
 
