@@ -105,9 +105,13 @@ One final conversion is available, that to a dictionary:
 
 	let props = "name1=value1\nname2='value2\nvalue3\n'\n"
 
-    let dict:[String:String] = props["(\\w+)=('[^']*'|.*)"]
+    let dict = props["(\\w+)=('[^']*'|[^\n]*)"].dictionary()
 
 	// ["name1": "value1", "name2": "'value2\nvalue3\n'"]
+
+Also you can now regex a file directly e.g.
+
+    RegexFile( "/path/to/file" )["pattern"] ~= "replacement"
 
 At which point this almost begins to look useful..
 

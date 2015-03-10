@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#37 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#38 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -19,8 +19,9 @@ public class SwiftRegex: NSObject, BooleanType {
 
     var target: NSString
     var regex: NSRegularExpression
+    var regexFile: RegexFile?
 
-    init(target:NSString, pattern:String, options:NSRegularExpressionOptions = nil) {
+    init(target:NSString, pattern:String, options:NSRegularExpressionOptions = .DotMatchesLineSeparators ) {
         self.target = target
         if let regex = swiftRegexCache[pattern] {
             self.regex = regex
@@ -29,8 +30,7 @@ public class SwiftRegex: NSObject, BooleanType {
             if let regex = NSRegularExpression(pattern: pattern, options:options, error:&error) {
                 swiftRegexCache[pattern] = regex
                 self.regex = regex
-            }
-            else {
+            } else {
                 SwiftRegex.failure("Error in pattern: \(pattern) - \(error)")
                 self.regex = NSRegularExpression()
             }
@@ -39,7 +39,7 @@ public class SwiftRegex: NSObject, BooleanType {
     }
 
     class func failure(message: String) {
-        println("SwiftRegex: "+message)
+        println("*** SwiftRegex: "+message)
         //assert(false,"SwiftRegex: failed")
     }
 
@@ -71,6 +71,8 @@ public class SwiftRegex: NSObject, BooleanType {
         return groupsForMatch( regex.firstMatchInString(target, options: options, range: targetRange) )
     }
 
+    private let noGroup = "_"
+
     func groupsForMatch(match: NSTextCheckingResult!) -> [String]! {
         if match != nil {
             var groups = [String]()
@@ -78,7 +80,7 @@ public class SwiftRegex: NSObject, BooleanType {
                 if let group = substring(match.rangeAtIndex(groupno)) as String! {
                     groups += [group]
                 } else {
-                    groups += ["_"] // avoids bridging problems
+                    groups += [noGroup] // avoids bridging problems
                 }
             }
             return groups
@@ -89,18 +91,29 @@ public class SwiftRegex: NSObject, BooleanType {
 
     public subscript(groupno: Int) -> String! {
         get {
-            return groups()[groupno]
+            if let groups = groups() {
+                let group = groups[groupno]
+                return group != noGroup ? group : nil
+            } else {
+                return nil
+            }
         }
         set(newValue) {
             if let mutableTarget = target as? NSMutableString {
                 for match in matchResults().reverse() {
                     let replacement = regex.replacementStringForResult( match,
-                                inString: target, offset: 0, template: newValue )
+                        inString: target, offset: 0, template: newValue )
                     mutableTarget.replaceCharactersInRange(match.rangeAtIndex(groupno), withString: replacement)
                 }
             } else {
                 SwiftRegex.failure("Group modify on non-mutable")
             }
+        }
+    }
+
+    public subscript(template: String) -> NSMutableString {
+        get {
+            return replaceWith(template)
         }
     }
 
@@ -130,7 +143,7 @@ public class SwiftRegex: NSObject, BooleanType {
     }
 
     func substituteMatches(substitution: (NSTextCheckingResult, UnsafeMutablePointer<ObjCBool>) -> String,
-                                options:NSMatchingOptions = nil) -> NSMutableString {
+                                options:NSMatchingOptions = nil) -> Bool {
         let out = NSMutableString()
         var pos = 0
 
@@ -146,13 +159,23 @@ public class SwiftRegex: NSObject, BooleanType {
         out.appendString( substring( NSRange(location:pos, length:targetRange.length-pos) ) )
 
         if let mutableTarget = target as? NSMutableString {
-            mutableTarget.setString(out)
-            return mutableTarget
+            if out != target {
+                mutableTarget.setString(out)
+                return true
+            }
         } else {
             SwiftRegex.failure("Modify on non-mutable")
-            return out
         }
+        return false
+
     }
+
+    func replaceWith( template: String, options: NSMatchingOptions = nil ) -> NSMutableString {
+        let mutable = /*target as? NSMutableString ??*/ RegexMutable( target )
+        regex.replaceMatchesInString(mutable, options: options, range: targetRange, withTemplate: template )
+        return mutable
+    }
+
 /* removed Beta6
     public func __conversion() -> Bool {
         return doesMatch()
@@ -184,34 +207,40 @@ public class SwiftRegex: NSObject, BooleanType {
 }
 
 extension NSString {
-    public subscript(pattern: String, options: NSRegularExpressionOptions) -> SwiftRegex {
+    public subscript(pattern: String, options: NSRegularExpressionOptions ) -> SwiftRegex {
         return SwiftRegex(target: self, pattern: pattern, options: options)
     }
 }
 
 extension NSString {
     public subscript(pattern: String) -> SwiftRegex {
-        return SwiftRegex(target: self, pattern: pattern)
+        return SwiftRegex(target: self, pattern: pattern )
     }
 }
 
 extension String {
-    public subscript(pattern: String, options: NSRegularExpressionOptions) -> SwiftRegex {
+    public subscript(pattern: String, options: NSRegularExpressionOptions ) -> SwiftRegex {
         return SwiftRegex(target: self, pattern: pattern, options: options)
     }
 }
 
 extension String {
     public subscript(pattern: String) -> SwiftRegex {
-        return SwiftRegex(target: self, pattern: pattern)
+        return SwiftRegex(target: self, pattern: pattern )
     }
 }
 
 public func RegexMutable(string: NSString) -> NSMutableString {
-    return NSMutableString(string:string)
+    return NSMutableString( string: string )
 }
 
-public func ~= (left: SwiftRegex, right: String) -> NSMutableString {
+// for switch
+public func ~= (left: String, right: String) -> Bool {
+    return SwiftRegex(target: right, pattern: left ).doesMatch()
+}
+
+// for replacements
+public func ~= (left: SwiftRegex, right: String) -> Bool {
     return left.substituteMatches {
         (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         return left.regex.replacementStringForResult( match,
@@ -219,7 +248,7 @@ public func ~= (left: SwiftRegex, right: String) -> NSMutableString {
     }
 }
 
-public func ~= (left: SwiftRegex, right: [String]) -> NSMutableString {
+public func ~= (left: SwiftRegex, right: [String]) -> Bool {
     var matchNumber = 0
     return left.substituteMatches {
         (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
@@ -233,18 +262,71 @@ public func ~= (left: SwiftRegex, right: [String]) -> NSMutableString {
     }
 }
 
-public func ~= (left: SwiftRegex, right: (String) -> String) -> NSMutableString {
+public func ~= (left: SwiftRegex, right: (String) -> String) -> Bool {
     return left.substituteMatches {
         (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         return right(left.substring(match.range))
     }
 }
 
-public func ~= (left: SwiftRegex, right: ([String]) -> String) -> NSMutableString {
+public func ~= (left: SwiftRegex, right: ([String]) -> String) -> Bool {
     return left.substituteMatches {
         (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
         return right(left.groupsForMatch(match))
     }
+}
+
+public class RegexFile {
+
+    let filepath: String
+    var contents: NSMutableString!
+
+    public init( _ path: String ) {
+        filepath = path
+        contents = regexLoadFile( path )
+    }
+
+    public subscript( pattern: String ) -> SwiftRegex {
+        get {
+            let regex = SwiftRegex( target: contents, pattern: pattern )
+            regex.regexFile = self
+            return regex
+        }
+    }
+
+    deinit {
+        regexSaveFile( filepath, newContents: contents )
+    }
+}
+
+public func regexLoadFile( path: String, bleat: Bool = true ) -> NSMutableString! {
+    var error: NSError?
+    if let string = NSMutableString( contentsOfFile: path, encoding: NSUTF8StringEncoding, error: &error ) {
+        return string
+    } else if bleat {
+        SwiftRegex.failure( "Could not load file: \(path), \(error?.localizedDescription)" )
+    }
+    return nil
+}
+
+public func regexSaveFile( path: String, #newContents: NSString, force: Bool = false ) -> Bool {
+    let current = regexLoadFile( path )
+    if current == nil || current != newContents || force {
+        var error: NSError?
+        if !newContents.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: &error ) {
+            SwiftRegex.failure( "Could not write to file: \(path), \(error?.localizedDescription)" )
+        } else {
+            return true
+        }
+    }
+
+    return false
+}
+
+func regexPatchFile( path: String, replace pattern: String, with template: String ) -> Bool {
+    var patched = regexLoadFile( path )
+    patched[pattern] ~= template
+    return regexSaveFile( path, newContents: patched )
 }
 
 // my take on custom threading operators from

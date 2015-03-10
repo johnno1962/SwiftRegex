@@ -68,10 +68,31 @@ class SwiftRegexTests: XCTestCase {
         str += minput
 
         let props = "name1=value1\nname2='value2\nvalue2\n'\n"
-        let dict = props["(\\w+)=('[^']*'|.*)"].dictionary()
+        let dict = props["(\\w+)=('[^']*'|[^\n]*)"].dictionary()
         XCTAssert(dict == ["name1": "value1", "name2": "'value2\nvalue2\n'"], "dictionary pass");
 
         XCTAssert(true, "Pass")
+
+        switch "john john" {
+        case "jo..":
+            XCTAssert(true, "switch match pass")
+        default:
+            XCTFail("switch match fail")
+        }
+
+        switch "john john" {
+        case "no..":
+            XCTFail("switch non-match fail")
+        default:
+            XCTAssert(true, "switch non-match pass")
+        }
+
+        let tmpFile = "/tmp/a"
+        regexSaveFile( tmpFile, newContents:"john john john" )
+        RegexFile( tmpFile )["john"] ~= "sam"
+        RegexFile( tmpFile )["sam"] ~= ["tim"]
+        XCTAssert(regexLoadFile(tmpFile)=="tim sam sam", "file replace pass")
+        XCTAssert(tmpFile["tmp"]["mnt"]["a"]["b"]=="/mnt/b", "chained")
     }
     
     func testPerformanceExample() {
