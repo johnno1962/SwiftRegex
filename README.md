@@ -109,11 +109,19 @@ One final conversion is available, that to a dictionary:
 
 	// ["name1": "value1", "name2": "'value2\nvalue3\n'"]
 
-Also you can now regex a file directly e.g.
+At which point this almost begins to look useful..
+
+Stop press:
+
+You can now regex a file directly e.g.
 
     RegexFile( "/path/to/file" )["pattern"] ~= "replacement"
 
-At which point this almost begins to look useful..
+And apply replacements inline with chaining
+
+    var result = string["pattern"]["replacement"]["pattern2"]["replacement2"]
+
+This is the best syntax I could up with alas..
 
 ### Some threading operators
 
@@ -156,13 +164,26 @@ There are also & and | operators for when no value is passed between the blocks.
 The semicolon is necessary as is one on the line previous to using these
 operators.
 
-### The License
+### License MIT
 
-This code is in the Public Domain subject to the usual disclaimer:
+Copyright (c) 2015 John Holdsworth
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-INCLUDING BUT NOT  LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
-CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
-OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
