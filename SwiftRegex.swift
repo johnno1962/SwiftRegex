@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#37 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#39 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
