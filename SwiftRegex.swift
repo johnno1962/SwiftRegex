@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#38 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#37 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -13,12 +13,13 @@
 
 import Foundation
 
-var swiftRegexCache = Dictionary<String,NSRegularExpression>()
+private var swiftRegexCache = Dictionary<String,NSRegularExpression>()
+let regexNoGroup = "__nil__"
 
 public class SwiftRegex: NSObject, BooleanType {
 
-    var target: NSString
-    var regex: NSRegularExpression
+    let target: NSString
+    let regex: NSRegularExpression
     var regexFile: RegexFile?
 
     init(target:NSString, pattern:String, options:NSRegularExpressionOptions = .DotMatchesLineSeparators ) {
@@ -71,16 +72,14 @@ public class SwiftRegex: NSObject, BooleanType {
         return groupsForMatch( regex.firstMatchInString(target, options: options, range: targetRange) )
     }
 
-    private let noGroup = "_"
-
     func groupsForMatch(match: NSTextCheckingResult!) -> [String]! {
         if match != nil {
             var groups = [String]()
             for groupno in 0...regex.numberOfCaptureGroups {
                 if let group = substring(match.rangeAtIndex(groupno)) as String! {
-                    groups += [group]
+                    groups.append( group )
                 } else {
-                    groups += [noGroup] // avoids bridging problems
+                    groups.append( regexNoGroup ) // avoids bridging problems
                 }
             }
             return groups
@@ -93,7 +92,7 @@ public class SwiftRegex: NSObject, BooleanType {
         get {
             if let groups = groups() {
                 let group = groups[groupno]
-                return group != noGroup ? group : nil
+                return group != regexNoGroup ? group : nil
             } else {
                 return nil
             }
@@ -212,15 +211,15 @@ extension NSString {
     }
 }
 
-extension NSString {
-    public subscript(pattern: String) -> SwiftRegex {
-        return SwiftRegex(target: self, pattern: pattern )
-    }
-}
-
 extension String {
     public subscript(pattern: String, options: NSRegularExpressionOptions ) -> SwiftRegex {
         return SwiftRegex(target: self, pattern: pattern, options: options)
+    }
+}
+
+extension NSString {
+    public subscript(pattern: String) -> SwiftRegex {
+        return SwiftRegex(target: self, pattern: pattern )
     }
 }
 
@@ -235,8 +234,14 @@ public func RegexMutable(string: NSString) -> NSMutableString {
 }
 
 // for switch
+public var lastRegexMatchGroups: [String!]!
+
 public func ~= (left: String, right: String) -> Bool {
-    return SwiftRegex(target: right, pattern: left ).doesMatch()
+    if let groups = SwiftRegex(target: right, pattern: left ).groups() {
+        lastRegexMatchGroups = groups.map { $0 != regexNoGroup ? $0 : nil }
+        return true
+    }
+    return false
 }
 
 // for replacements
@@ -287,11 +292,9 @@ public class RegexFile {
     }
 
     public subscript( pattern: String ) -> SwiftRegex {
-        get {
-            let regex = SwiftRegex( target: contents, pattern: pattern )
-            regex.regexFile = self
-            return regex
-        }
+        let regex = SwiftRegex( target: contents, pattern: pattern )
+        regex.regexFile = self // retains until after substitution
+        return regex
     }
 
     deinit {
@@ -303,15 +306,16 @@ public func regexLoadFile( path: String, bleat: Bool = true ) -> NSMutableString
     var error: NSError?
     if let string = NSMutableString( contentsOfFile: path, encoding: NSUTF8StringEncoding, error: &error ) {
         return string
-    } else if bleat {
+    }
+    else if bleat {
         SwiftRegex.failure( "Could not load file: \(path), \(error?.localizedDescription)" )
     }
     return nil
 }
 
 public func regexSaveFile( path: String, #newContents: NSString, force: Bool = false ) -> Bool {
-    let current = regexLoadFile( path )
-    if current == nil || current != newContents || force {
+    let current = force ? nil : regexLoadFile( path, bleat: false )
+    if current == nil || current != newContents {
         var error: NSError?
         if !newContents.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: &error ) {
             SwiftRegex.failure( "Could not write to file: \(path), \(error?.localizedDescription)" )
@@ -352,7 +356,7 @@ public func | <R> (left: () -> R, right: (result:R) -> Void) {
 
 // dispatch groups { block } & { block } | { completion }
 public func & (left: () -> Void, right: () -> Void) -> [() -> Void] {
-    return [left, right];
+    return [left, right]
 }
 
 public func & (left: [() -> Void], right: () -> Void) -> [() -> Void] {
