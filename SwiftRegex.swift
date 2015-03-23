@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#39 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#37 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -40,10 +40,43 @@ public class SwiftRegex: NSObject, BooleanType {
     }
 
     class func failure(message: String) {
-        println("*** SwiftRegex: "+message)
+        NSLog( "*** SwiftRegex: \(message)"["%"]["%%"] )
         //assert(false,"SwiftRegex: failed")
     }
 
+    public class func loadFile( path: String, bleat: Bool = true ) -> NSMutableString! {
+        var error: NSError?
+        if let string = NSMutableString( contentsOfFile: path, encoding: NSUTF8StringEncoding, error: &error ) {
+            return string
+        }
+        else if bleat {
+            failure( "Could not load file: \(path), \(error?.localizedDescription)" )
+        }
+        return nil
+    }
+
+    public class func saveFile( path: String, newContents: NSString, force: Bool = false ) -> Bool {
+        let current = force ? nil : loadFile( path, bleat: false )
+
+        if current == nil || current != newContents {
+            var error: NSError?
+
+            if !newContents.writeToFile( path, atomically: true, encoding: NSUTF8StringEncoding, error: &error ) {
+                failure( "Could not write to file: \(path), \(error?.localizedDescription)" )
+            } else {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    public class func patchFile( path: String, replace pattern: String, with template: String ) -> Bool {
+        var patched = loadFile( path )
+        patched[pattern] ~= template
+        return saveFile( path, newContents: patched )
+    }
+    
     final var targetRange: NSRange {
         return NSRange(location: 0,length: target.length)
     }
@@ -288,7 +321,7 @@ public class RegexFile {
 
     public init( _ path: String ) {
         filepath = path
-        contents = regexLoadFile( path )
+        contents = SwiftRegex.loadFile( path )
     }
 
     public subscript( pattern: String ) -> SwiftRegex {
@@ -298,39 +331,9 @@ public class RegexFile {
     }
 
     deinit {
-        regexSaveFile( filepath, newContents: contents )
-    }
-}
-
-public func regexLoadFile( path: String, bleat: Bool = true ) -> NSMutableString! {
-    var error: NSError?
-    if let string = NSMutableString( contentsOfFile: path, encoding: NSUTF8StringEncoding, error: &error ) {
-        return string
-    }
-    else if bleat {
-        SwiftRegex.failure( "Could not load file: \(path), \(error?.localizedDescription)" )
-    }
-    return nil
-}
-
-public func regexSaveFile( path: String, #newContents: NSString, force: Bool = false ) -> Bool {
-    let current = force ? nil : regexLoadFile( path, bleat: false )
-    if current == nil || current != newContents {
-        var error: NSError?
-        if !newContents.writeToFile(path, atomically: true, encoding: NSUTF8StringEncoding, error: &error ) {
-            SwiftRegex.failure( "Could not write to file: \(path), \(error?.localizedDescription)" )
-        } else {
-            return true
-        }
+        SwiftRegex.saveFile( filepath, newContents: contents )
     }
 
-    return false
-}
-
-func regexPatchFile( path: String, replace pattern: String, with template: String ) -> Bool {
-    var patched = regexLoadFile( path )
-    patched[pattern] ~= template
-    return regexSaveFile( path, newContents: patched )
 }
 
 // my take on custom threading operators from
