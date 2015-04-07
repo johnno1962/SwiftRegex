@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#37 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#41 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -14,7 +14,7 @@
 import Foundation
 
 private var swiftRegexCache = Dictionary<String,NSRegularExpression>()
-let regexNoGroup = "__nil__"
+public let regexNoGroup = "__nil__"
 
 public class SwiftRegex: NSObject, BooleanType {
 
@@ -335,80 +335,3 @@ public class RegexFile {
     }
 
 }
-
-// my take on custom threading operators from
-// http://ijoshsmith.com/2014/07/05/custom-threading-operator-in-swift/
-
-private let _queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
-public func | (left: () -> Void, right: () -> Void) {
-    dispatch_async(_queue) {
-        left()
-        dispatch_async(dispatch_get_main_queue(), right)
-    }
-}
-
-public func | <R> (left: () -> R, right: (result:R) -> Void) {
-    dispatch_async(_queue) {
-        let result = left()
-        dispatch_async(dispatch_get_main_queue(), {
-            right(result:result)
-        })
-    }
-}
-
-// dispatch groups { block } & { block } | { completion }
-public func & (left: () -> Void, right: () -> Void) -> [() -> Void] {
-    return [left, right]
-}
-
-public func & (left: [() -> Void], right: () -> Void) -> [() -> Void] {
-    var out = left
-    out.append( right )
-    return out
-}
-
-public func | (left: [() -> Void], right: () -> Void) {
-    let group = dispatch_group_create()
-
-    for block in left {
-        dispatch_group_async(group, _queue, block)
-    }
-
-    dispatch_group_notify(group, dispatch_get_main_queue(), right)
-}
-
-// parallel blocks with returns
-public func & <R> (left: () -> R, right: () -> R) -> [() -> R] {
-    return [left, right]
-}
-
-public func & <R> (left: [() -> R], right: () -> R) -> [() -> R] {
-    var out = left
-    out.append( right )
-    return out
-}
-
-public func | <R> (left: [() -> R], right: (results:[R!]) -> Void) {
-    let group = dispatch_group_create()
-
-    var results = Array<R!>()
-    for t in 0..<left.count {
-        results += [nil]
-    }
-
-    for t in 0..<left.count {
-        //dispatch_retain(group)
-        dispatch_group_enter(group)
-        dispatch_async(_queue, {
-            results[t] = left[t]()
-            dispatch_group_leave(group)
-            //dispatch_release(group)
-        })
-    }
-
-    dispatch_group_notify(group, dispatch_get_main_queue(), {
-        right(results: results)
-    })
-}
-

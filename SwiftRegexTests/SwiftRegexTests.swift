@@ -39,7 +39,7 @@ class SwiftRegexTests: XCTestCase {
 
         XCTAssert(input["quick brown (\\w+)"][1] == "fox", "group subscript");
 
-        XCTAssert(input["(the lazy) (cat)?"].groups()[2] == "_", "optional group pass");
+        XCTAssert(input["(the lazy) (cat)?"].groups()[2] == regexNoGroup, "optional group pass");
 
         let groups = input["the (.*?) (fox|dog)", .CaseInsensitive].allGroups()
         XCTAssert(groups == [["The quick brown fox", "quick brown", "fox"],
@@ -87,11 +87,11 @@ class SwiftRegexTests: XCTestCase {
             XCTAssert(true, "switch non-match pass")
         }
 
-        let tmpFile = "/tmp/a"
-        regexSaveFile( tmpFile, newContents:"john john john" )
+        let tmpFile = "/tmp/b"
+        SwiftRegex.saveFile( tmpFile, newContents:"john john john" )
         RegexFile( tmpFile )["john"] ~= "sam"
         RegexFile( tmpFile )["sam"] ~= ["tim"]
-        XCTAssert(regexLoadFile(tmpFile)=="tim sam sam", "file replace pass")
+        XCTAssert(SwiftRegex.loadFile(tmpFile)=="tim sam sam", "file replace pass")
         XCTAssert(tmpFile["tmp"]["mnt"]["a"]["b"]=="/mnt/b", "chained")
     }
     
