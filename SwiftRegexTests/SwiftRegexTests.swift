@@ -64,8 +64,8 @@ class SwiftRegexTests: XCTestCase {
 
         XCTAssert(minput == "The Quick Red Brown Fox Jumps Over The Very Lazy Brown Dog.", "group replace pass");
 
-        var str:String = minput
-        str += minput
+        var str = minput as String
+        str += minput as String
 
         let props = "name1=value1\nname2='value2\nvalue2\n'\n"
         let dict = props["(\\w+)=('[^']*'|[^\n]*)"].dictionary()

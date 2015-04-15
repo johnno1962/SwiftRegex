@@ -34,7 +34,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         sender?.resignFirstResponder()
         var mtext = RegexMutable(input.text)
         mtext[regex.text] ~= replace.text
-        result.text = mtext
+        result.text = mtext as String
     }
 
     override func didReceiveMemoryWarning() {
