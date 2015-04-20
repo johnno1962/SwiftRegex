@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftRegex
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

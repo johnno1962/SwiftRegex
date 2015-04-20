@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftRegex
 
 class ViewController: UIViewController, UITextViewDelegate {
                             

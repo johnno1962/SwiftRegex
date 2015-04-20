@@ -7,40 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		659D4D1D1AE5408D00275D22 /* SwiftRegex.h in Headers */ = {isa = PBXBuildFile; fileRef = 659D4D1C1AE5408D00275D22 /* SwiftRegex.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		659D4D231AE5408D00275D22 /* SwiftRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D4D181AE5408D00275D22 /* SwiftRegex.framework */; };
-		659D4D2F1AE5408D00275D22 /* SwiftRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659D4D181AE5408D00275D22 /* SwiftRegex.framework */; };
-		659D4D301AE5408D00275D22 /* SwiftRegex.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 659D4D181AE5408D00275D22 /* SwiftRegex.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		659D4D381AE540DB00275D22 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3FF62C195CB591003933EB /* SwiftRegex.swift */; };
+		BB3FF62D195CB591003933EB /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3FF62C195CB591003933EB /* SwiftRegex.swift */; };
 		BB9C6368195C76EF0079384F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C6367195C76EF0079384F /* AppDelegate.swift */; };
 		BB9C636A195C76EF0079384F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C6369195C76EF0079384F /* ViewController.swift */; };
 		BB9C636F195C76EF0079384F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB9C636E195C76EF0079384F /* Images.xcassets */; };
-		BB9C637B195C76EF0079384F /* SwiftRegexAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C637A195C76EF0079384F /* SwiftRegexAppTests.swift */; };
+		BB9C637B195C76EF0079384F /* SwiftRegexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C637A195C76EF0079384F /* SwiftRegexTests.swift */; };
 		BBCD9A97195E1DAE007DEEE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCD9A95195E1DAE007DEEE3 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		659D4D241AE5408D00275D22 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BB9C635A195C76EF0079384F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 659D4D171AE5408D00275D22;
-			remoteInfo = SwiftRegex;
-		};
-		659D4D261AE5408D00275D22 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BB9C635A195C76EF0079384F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BB9C6361195C76EF0079384F;
-			remoteInfo = SwiftRegexApp;
-		};
-		659D4D2D1AE5408D00275D22 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BB9C635A195C76EF0079384F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 659D4D171AE5408D00275D22;
-			remoteInfo = SwiftRegex;
-		};
 		BB9C6375195C76EF0079384F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BB9C635A195C76EF0079384F /* Project object */;
@@ -50,60 +25,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		659D4D341AE5408D00275D22 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				659D4D301AE5408D00275D22 /* SwiftRegex.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		659D4D181AE5408D00275D22 /* SwiftRegex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRegex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		659D4D1B1AE5408D00275D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		659D4D1C1AE5408D00275D22 /* SwiftRegex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRegex.h; sourceTree = "<group>"; };
-		659D4D221AE5408D00275D22 /* SwiftRegexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRegexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		659D4D2A1AE5408D00275D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB3FF62C195CB591003933EB /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = SOURCE_ROOT; };
-		BB9C6362195C76EF0079384F /* SwiftRegexApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftRegexApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB9C6362195C76EF0079384F /* SwiftRegex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftRegex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9C6366195C76EF0079384F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB9C6367195C76EF0079384F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BB9C6369195C76EF0079384F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BB9C636E195C76EF0079384F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		BB9C6374195C76EF0079384F /* SwiftRegexAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRegexAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB9C6374195C76EF0079384F /* SwiftRegexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftRegexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9C6379195C76EF0079384F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB9C637A195C76EF0079384F /* SwiftRegexAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftRegexAppTests.swift; sourceTree = "<group>"; };
+		BB9C637A195C76EF0079384F /* SwiftRegexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftRegexTests.swift; sourceTree = "<group>"; };
 		BBCD9A96195E1DAE007DEEE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBE4A5E7195FC72F002762F2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		659D4D141AE5408D00275D22 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		659D4D1F1AE5408D00275D22 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				659D4D231AE5408D00275D22 /* SwiftRegex.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BB9C635F195C76EF0079384F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				659D4D2F1AE5408D00275D22 /* SwiftRegex.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,47 +57,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		659D4D191AE5408D00275D22 /* SwiftRegex */ = {
-			isa = PBXGroup;
-			children = (
-				BB3FF62C195CB591003933EB /* SwiftRegex.swift */,
-				659D4D1A1AE5408D00275D22 /* Supporting Files */,
-			);
-			path = SwiftRegex;
-			sourceTree = "<group>";
-		};
-		659D4D1A1AE5408D00275D22 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				659D4D1B1AE5408D00275D22 /* Info.plist */,
-				659D4D1C1AE5408D00275D22 /* SwiftRegex.h */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		659D4D281AE5408D00275D22 /* SwiftRegexTests */ = {
-			isa = PBXGroup;
-			children = (
-				659D4D291AE5408D00275D22 /* Supporting Files */,
-			);
-			path = SwiftRegexTests;
-			sourceTree = "<group>";
-		};
-		659D4D291AE5408D00275D22 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				659D4D2A1AE5408D00275D22 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		BB9C6359195C76EF0079384F = {
 			isa = PBXGroup;
 			children = (
-				BB9C6364195C76EF0079384F /* SwiftRegexApp */,
-				BB9C6377195C76EF0079384F /* SwiftRegexAppTests */,
-				659D4D191AE5408D00275D22 /* SwiftRegex */,
-				659D4D281AE5408D00275D22 /* SwiftRegexTests */,
+				BB9C6364195C76EF0079384F /* SwiftRegex */,
+				BB9C6377195C76EF0079384F /* SwiftRegexTests */,
 				BB9C6363195C76EF0079384F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,25 +69,23 @@
 		BB9C6363195C76EF0079384F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BB9C6362195C76EF0079384F /* SwiftRegexApp.app */,
-				BB9C6374195C76EF0079384F /* SwiftRegexAppTests.xctest */,
-				659D4D181AE5408D00275D22 /* SwiftRegex.framework */,
-				659D4D221AE5408D00275D22 /* SwiftRegexTests.xctest */,
+				BB9C6362195C76EF0079384F /* SwiftRegex.app */,
+				BB9C6374195C76EF0079384F /* SwiftRegexTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BB9C6364195C76EF0079384F /* SwiftRegexApp */ = {
+		BB9C6364195C76EF0079384F /* SwiftRegex */ = {
 			isa = PBXGroup;
 			children = (
 				BBE4A5E7195FC72F002762F2 /* README.md */,
+				BB3FF62C195CB591003933EB /* SwiftRegex.swift */,
 				BB9C6367195C76EF0079384F /* AppDelegate.swift */,
 				BB9C6369195C76EF0079384F /* ViewController.swift */,
 				BBCD9A95195E1DAE007DEEE3 /* Main.storyboard */,
 				BB9C636E195C76EF0079384F /* Images.xcassets */,
 				BB9C6365195C76EF0079384F /* Supporting Files */,
 			);
-			name = SwiftRegexApp;
 			path = SwiftRegex;
 			sourceTree = "<group>";
 		};
@@ -195,13 +97,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BB9C6377195C76EF0079384F /* SwiftRegexAppTests */ = {
+		BB9C6377195C76EF0079384F /* SwiftRegexTests */ = {
 			isa = PBXGroup;
 			children = (
-				BB9C637A195C76EF0079384F /* SwiftRegexAppTests.swift */,
+				BB9C637A195C76EF0079384F /* SwiftRegexTests.swift */,
 				BB9C6378195C76EF0079384F /* Supporting Files */,
 			);
-			name = SwiftRegexAppTests;
 			path = SwiftRegexTests;
 			sourceTree = "<group>";
 		};
@@ -215,26 +116,14 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		659D4D151AE5408D00275D22 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				659D4D1D1AE5408D00275D22 /* SwiftRegex.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		659D4D171AE5408D00275D22 /* SwiftRegex */ = {
+		BB9C6361195C76EF0079384F /* SwiftRegex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 659D4D311AE5408D00275D22 /* Build configuration list for PBXNativeTarget "SwiftRegex" */;
+			buildConfigurationList = BB9C637E195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegex" */;
 			buildPhases = (
-				659D4D131AE5408D00275D22 /* Sources */,
-				659D4D141AE5408D00275D22 /* Frameworks */,
-				659D4D151AE5408D00275D22 /* Headers */,
-				659D4D161AE5408D00275D22 /* Resources */,
+				BB9C635E195C76EF0079384F /* Sources */,
+				BB9C635F195C76EF0079384F /* Frameworks */,
+				BB9C6360195C76EF0079384F /* Resources */,
 			);
 			buildRules = (
 			);
@@ -242,50 +131,12 @@
 			);
 			name = SwiftRegex;
 			productName = SwiftRegex;
-			productReference = 659D4D181AE5408D00275D22 /* SwiftRegex.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		659D4D211AE5408D00275D22 /* SwiftRegexTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 659D4D351AE5408D00275D22 /* Build configuration list for PBXNativeTarget "SwiftRegexTests" */;
-			buildPhases = (
-				659D4D1E1AE5408D00275D22 /* Sources */,
-				659D4D1F1AE5408D00275D22 /* Frameworks */,
-				659D4D201AE5408D00275D22 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				659D4D251AE5408D00275D22 /* PBXTargetDependency */,
-				659D4D271AE5408D00275D22 /* PBXTargetDependency */,
-			);
-			name = SwiftRegexTests;
-			productName = SwiftRegexTests;
-			productReference = 659D4D221AE5408D00275D22 /* SwiftRegexTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		BB9C6361195C76EF0079384F /* SwiftRegexApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BB9C637E195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegexApp" */;
-			buildPhases = (
-				BB9C635E195C76EF0079384F /* Sources */,
-				BB9C635F195C76EF0079384F /* Frameworks */,
-				BB9C6360195C76EF0079384F /* Resources */,
-				659D4D341AE5408D00275D22 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				659D4D2E1AE5408D00275D22 /* PBXTargetDependency */,
-			);
-			name = SwiftRegexApp;
-			productName = SwiftRegex;
-			productReference = BB9C6362195C76EF0079384F /* SwiftRegexApp.app */;
+			productReference = BB9C6362195C76EF0079384F /* SwiftRegex.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BB9C6373195C76EF0079384F /* SwiftRegexAppTests */ = {
+		BB9C6373195C76EF0079384F /* SwiftRegexTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB9C6381195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegexAppTests" */;
+			buildConfigurationList = BB9C6381195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegexTests" */;
 			buildPhases = (
 				BB9C6370195C76EF0079384F /* Sources */,
 				BB9C6371195C76EF0079384F /* Frameworks */,
@@ -296,9 +147,9 @@
 			dependencies = (
 				BB9C6376195C76EF0079384F /* PBXTargetDependency */,
 			);
-			name = SwiftRegexAppTests;
+			name = SwiftRegexTests;
 			productName = SwiftRegexTests;
-			productReference = BB9C6374195C76EF0079384F /* SwiftRegexAppTests.xctest */;
+			productReference = BB9C6374195C76EF0079384F /* SwiftRegexTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -310,13 +161,6 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "John Holdsworth";
 				TargetAttributes = {
-					659D4D171AE5408D00275D22 = {
-						CreatedOnToolsVersion = 6.3;
-					};
-					659D4D211AE5408D00275D22 = {
-						CreatedOnToolsVersion = 6.3;
-						TestTargetID = BB9C6361195C76EF0079384F;
-					};
 					BB9C6361195C76EF0079384F = {
 						CreatedOnToolsVersion = 6.0;
 					};
@@ -339,29 +183,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BB9C6361195C76EF0079384F /* SwiftRegexApp */,
-				BB9C6373195C76EF0079384F /* SwiftRegexAppTests */,
-				659D4D171AE5408D00275D22 /* SwiftRegex */,
-				659D4D211AE5408D00275D22 /* SwiftRegexTests */,
+				BB9C6361195C76EF0079384F /* SwiftRegex */,
+				BB9C6373195C76EF0079384F /* SwiftRegexTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		659D4D161AE5408D00275D22 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		659D4D201AE5408D00275D22 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BB9C6360195C76EF0079384F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,27 +209,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		659D4D131AE5408D00275D22 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				659D4D381AE540DB00275D22 /* SwiftRegex.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		659D4D1E1AE5408D00275D22 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BB9C635E195C76EF0079384F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				BB9C636A195C76EF0079384F /* ViewController.swift in Sources */,
 				BB9C6368195C76EF0079384F /* AppDelegate.swift in Sources */,
+				BB3FF62D195CB591003933EB /* SwiftRegex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,31 +223,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB9C637B195C76EF0079384F /* SwiftRegexAppTests.swift in Sources */,
+				BB9C637B195C76EF0079384F /* SwiftRegexTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		659D4D251AE5408D00275D22 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 659D4D171AE5408D00275D22 /* SwiftRegex */;
-			targetProxy = 659D4D241AE5408D00275D22 /* PBXContainerItemProxy */;
-		};
-		659D4D271AE5408D00275D22 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BB9C6361195C76EF0079384F /* SwiftRegexApp */;
-			targetProxy = 659D4D261AE5408D00275D22 /* PBXContainerItemProxy */;
-		};
-		659D4D2E1AE5408D00275D22 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 659D4D171AE5408D00275D22 /* SwiftRegex */;
-			targetProxy = 659D4D2D1AE5408D00275D22 /* PBXContainerItemProxy */;
-		};
 		BB9C6376195C76EF0079384F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BB9C6361195C76EF0079384F /* SwiftRegexApp */;
+			target = BB9C6361195C76EF0079384F /* SwiftRegex */;
 			targetProxy = BB9C6375195C76EF0079384F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -450,94 +249,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		659D4D321AE5408D00275D22 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftRegex/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		659D4D331AE5408D00275D22 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = SwiftRegex/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		659D4D361AE5408D00275D22 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SwiftRegexTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftRegexApp.app/SwiftRegexApp";
-			};
-			name = Debug;
-		};
-		659D4D371AE5408D00275D22 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = SwiftRegexTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftRegexApp.app/SwiftRegexApp";
-			};
-			name = Release;
-		};
 		BB9C637C195C76EF0079384F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -572,7 +283,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -609,7 +320,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -642,7 +353,7 @@
 		BB9C6382195C76EF0079384F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SwiftRegex.app/SwiftRegex";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -655,14 +366,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftRegexApp.app/SwiftRegexApp";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
 		};
 		BB9C6383195C76EF0079384F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SwiftRegex.app/SwiftRegex";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -671,31 +382,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftRegexApp.app/SwiftRegexApp";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		659D4D311AE5408D00275D22 /* Build configuration list for PBXNativeTarget "SwiftRegex" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				659D4D321AE5408D00275D22 /* Debug */,
-				659D4D331AE5408D00275D22 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		659D4D351AE5408D00275D22 /* Build configuration list for PBXNativeTarget "SwiftRegexTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				659D4D361AE5408D00275D22 /* Debug */,
-				659D4D371AE5408D00275D22 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		BB9C635D195C76EF0079384F /* Build configuration list for PBXProject "SwiftRegex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -705,7 +398,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BB9C637E195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegexApp" */ = {
+		BB9C637E195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB9C637F195C76EF0079384F /* Debug */,
@@ -714,7 +407,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BB9C6381195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegexAppTests" */ = {
+		BB9C6381195C76EF0079384F /* Build configuration list for PBXNativeTarget "SwiftRegexTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB9C6382195C76EF0079384F /* Debug */,
