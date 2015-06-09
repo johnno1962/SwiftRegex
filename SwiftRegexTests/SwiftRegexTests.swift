@@ -27,14 +27,14 @@ class SwiftRegexTests: XCTestCase {
 
         XCTAssert(input["quick .* fox"].match() == "quick brown fox", "basic match");
 
-        if let noMatch = input["quick orange fox"].match() {
+        if let _ = input["quick orange fox"].match() {
             XCTAssert(false, "non-match fail");
         }
         else {
             XCTAssert(true, "non-match pass");
         }
 
-        var match:[String] = input["the .* dog"].matches()
+        let match:[String] = input["the .* dog"].matches()
         XCTAssert(match==["the lazy dog"], "convert pass")
 
         XCTAssert(input["quick brown (\\w+)"][1] == "fox", "group subscript");

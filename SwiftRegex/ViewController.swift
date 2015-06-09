@@ -25,15 +25,15 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBAction func regexChanged(sender : UITextField!) {
         sender?.resignFirstResponder()
         let text = input.text
-        let gps = text[regex.text].allGroups()
+        let gps = text[regex.text!].allGroups()
         groups.text = "\(gps)"
         replaceChanged(sender)
     }
 
     @IBAction func replaceChanged(sender : UITextField!) {
         sender?.resignFirstResponder()
-        var mtext = RegexMutable(input.text)
-        mtext[regex.text] ~= replace.text
+        let mtext = RegexMutable(input.text)
+        mtext[regex.text!] ~= replace.text!
         result.text = mtext as String
     }
 

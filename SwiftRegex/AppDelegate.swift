@@ -25,27 +25,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let words:[String] = input["(\\w+)"].matches()
         let groups:[[String]] = input["(\\w)(\\w+)"].allGroups()
 
-        println(words)
-        println(groups)
+        print(words)
+        print(groups)
 
         if input["good"] {
-            println("good")
+            print("good")
         }
 
-        var output = input["men"] ~= "people"
+        let output = input["men"] ~= "people"
 
-        println(output)
+        print(output)
 
-        var mutable = RegexMutable( input )
+        let mutable = RegexMutable( input )
 
         mutable["men"] ~= "folk"
         mutable["the party"] ~= "their country"
 
-        let adjective = mutable["(\\w+) (men|people|folk)"][1]
+        _ = mutable["(\\w+) (men|people|folk)"][1]
 
         mutable["(good) (\\w+)"][1] = "great"
 
-        println(mutable)
+        print(mutable)
 
         // "Now is the time for all great folk to come to the aid of their country"
 
@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return match.uppercaseString
         }
 
-        println(mutable)
+        print(mutable)
         // "NOW IS THE TIME FOR ALL GREAT FOLK TO COME TO THE AID OF THEIR COUNTRY"
 
         mutable["(\\w)(\\w+)"] ~= {
@@ -62,14 +62,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return groups[1]+groups[2].lowercaseString
         }
 
-        println(mutable)
+        print(mutable)
         // "Now Is The Time For All Great Folk To Come To The Aid Of Their Country"
 
         let props = "name1=value1\nname2='value2\nvalue2\n'\n"
         let dict:[String:String] = props["(\\w+)=('[^']*'|.*)"].dictionary()
         // ["name1": "value1", "name2": "'value2\nvalue2\n'"]
 
-        println(dict)
+        print(dict)
 
         return true
     }
