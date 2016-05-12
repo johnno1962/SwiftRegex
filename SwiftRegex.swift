@@ -290,7 +290,8 @@ public func ~= ( left: SwiftRegex, right: [String] ) -> Bool {
     return left.substituteMatches( {
         (match: NSTextCheckingResult, stop: UnsafeMutablePointer<ObjCBool>) in
 
-        if ++matchNumber == right.count {
+        matchNumber += 1
+        if matchNumber == right.count {
             stop.memory = true
         }
 
