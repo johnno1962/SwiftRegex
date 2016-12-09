@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BB3FF62D195CB591003933EB /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3FF62C195CB591003933EB /* SwiftRegex.swift */; };
+		BB78F3F61DFA441600C9D1ED /* SwiftRegex.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BB78F3F51DFA441600C9D1ED /* SwiftRegex.podspec */; };
 		BB9C6368195C76EF0079384F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C6367195C76EF0079384F /* AppDelegate.swift */; };
 		BB9C636A195C76EF0079384F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9C6369195C76EF0079384F /* ViewController.swift */; };
 		BB9C636F195C76EF0079384F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB9C636E195C76EF0079384F /* Images.xcassets */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		BB3FF62C195CB591003933EB /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = SOURCE_ROOT; };
+		BB78F3F51DFA441600C9D1ED /* SwiftRegex.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SwiftRegex.podspec; sourceTree = SOURCE_ROOT; };
 		BB9C6362195C76EF0079384F /* SwiftRegex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftRegex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9C6366195C76EF0079384F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB9C6367195C76EF0079384F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 			children = (
 				BBE4A5E7195FC72F002762F2 /* README.md */,
 				BB3FF62C195CB591003933EB /* SwiftRegex.swift */,
+				BB78F3F51DFA441600C9D1ED /* SwiftRegex.podspec */,
 				BB9C6367195C76EF0079384F /* AppDelegate.swift */,
 				BB9C6369195C76EF0079384F /* ViewController.swift */,
 				BBCD9A95195E1DAE007DEEE3 /* Main.storyboard */,
@@ -197,6 +200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB78F3F61DFA441600C9D1ED /* SwiftRegex.podspec in Resources */,
 				BB9C636F195C76EF0079384F /* Images.xcassets in Resources */,
 				BBCD9A97195E1DAE007DEEE3 /* Main.storyboard in Resources */,
 			);

@@ -101,15 +101,14 @@ open class SwiftRegex {
             targetRange.length = target.length - targetRange.location
             return match
         }
+        targetRange = NSMakeRange(0, target.length)
         return nil
     }
 
     public func dictionary( options: NSRegularExpression.MatchingOptions = [] ) -> Dictionary<String,String> {
         var out = Dictionary<String,String>()
-        while let match = nextMatch(options: options) {
-            if let key = targetString(match: match, group: 1) {
-                out[key] = targetString(match: match, group: 2)
-            }
+        while let groupStrings = self[0..<3] {
+            out[groupStrings[1] ?? ""] = groupStrings[2]
         }
         return out
     }
