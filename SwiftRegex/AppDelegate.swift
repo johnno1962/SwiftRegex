@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mutable["men"] ~= "folk"
         mutable["the party"] ~= "their country"
 
-        _ = mutable["(\\w+) (men|people|folk)"][1]
+//        _ = mutable["(\\w+) (men|people|folk)"][1]
 
         mutable["(good) (\\w+)"][1] = "great"
 
