@@ -125,7 +125,7 @@ This is the best syntax I could up with alas..
 
 ### License MIT
 
-Copyright (c) 2015 John Holdsworth
+Copyright (c) 2015-6 John Holdsworth
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

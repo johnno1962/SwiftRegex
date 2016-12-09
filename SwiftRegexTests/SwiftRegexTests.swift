@@ -25,9 +25,9 @@ class SwiftRegexTests: XCTestCase {
         // This is an example of a functional test case.
         let input = "The quick brown fox jumps over the lazy dog."
 
-        XCTAssert(input["quick .* fox"].match() == "quick brown fox", "basic match");
+        XCTAssert(input["quick .* fox"][0] == "quick brown fox", "basic match");
 
-        if let _ = input["quick orange fox"].match() {
+        if let _ = input["quick orange fox"][0] {
             XCTAssert(false, "non-match fail");
         }
         else {
@@ -39,11 +39,11 @@ class SwiftRegexTests: XCTestCase {
 
         XCTAssert(input["quick brown (\\w+)"][1] == "fox", "group subscript");
 
-        XCTAssert(input["(the lazy) (cat)?"].groups()[2] == regexNoGroup, "optional group pass");
+        XCTAssert(input["(the lazy) (cat)?"][2] == nil, "optional group pass");
 
-        let groups = input["the (.*?) (fox|dog)", .CaseInsensitive].allGroups()
-        XCTAssert(groups == [["The quick brown fox", "quick brown", "fox"],
-                             ["the lazy dog", "lazy", "dog"]], "groups match");
+//        let groups = input["the (.*?) (fox|dog)", .caseInsensitive].allGroups()
+//        XCTAssert(groups.map { $0.map { $0! } } == [["The quick brown fox", "quick brown", "fox"],
+//                             ["the lazy dog", "lazy", "dog"]], "groups match");
 
         let minput = NSMutableString(string:input)
 
@@ -54,8 +54,8 @@ class SwiftRegexTests: XCTestCase {
         XCTAssert(minput == "The quick brown fox jumps over the very lazy brown dog.", "replace array pass");
 
         minput["(\\w)(\\w+)"] ~= {
-            (groups: [String]) in
-            return groups[1].uppercaseString+groups[2]
+            (groups: [String?]) in
+            return groups[1]!.uppercased()+groups[2]!
         }
 
         XCTAssert(minput == "The Quick Brown Fox Jumps Over The Very Lazy Brown Dog.", "block pass");
@@ -88,16 +88,17 @@ class SwiftRegexTests: XCTestCase {
         }
 
         let tmpFile = "/tmp/b"
-        SwiftRegex.saveFile( tmpFile, newContents:"john john john" )
-        RegexFile( tmpFile )["john"] ~= "sam"
-        RegexFile( tmpFile )["sam"] ~= ["tim"]
-        XCTAssert(SwiftRegex.loadFile(tmpFile)=="tim sam sam", "file replace pass")
+        FileRegex.save( path: tmpFile, contents: "john john john")
+        let fregex = try! FileRegex( path: tmpFile )
+        fregex["john"] ~= "sam"
+        fregex["sam"] ~= ["tim"]
+        XCTAssert(try! FileRegex.load(path: tmpFile)=="tim sam sam", "file replace pass")
         XCTAssert(tmpFile["tmp"]["mnt"]["a"]["b"]=="/mnt/b", "chained")
     }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock() {
+        self.measure() {
             // Put the code you want to measure the time of here.
         }
     }

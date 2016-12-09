@@ -22,17 +22,17 @@ class ViewController: UIViewController, UITextViewDelegate {
         regexChanged(nil)
     }
 
-    @IBAction func regexChanged(sender : UITextField!) {
+    @IBAction func regexChanged(_ sender : UITextField!) {
         sender?.resignFirstResponder()
-        let text = input.text
+        let text = input.text!
         let gps = text[regex.text!].allGroups()
         groups.text = "\(gps)"
         replaceChanged(sender)
     }
 
-    @IBAction func replaceChanged(sender : UITextField!) {
+    @IBAction func replaceChanged(_ sender : UITextField!) {
         sender?.resignFirstResponder()
-        let mtext = RegexMutable(input.text)
+        let mtext = NSMutableString(string: input.text)
         mtext[regex.text!] ~= replace.text!
         result.text = mtext as String
     }
