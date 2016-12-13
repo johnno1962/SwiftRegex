@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014-6 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#48 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#55 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -82,7 +82,7 @@ open class SwiftRegex: Sequence, IteratorProtocol {
     }
 
     public func next() -> [String?]? {
-        return groups()
+        return nextGroups()
     }
 
     static func error(_ msg: String) {
@@ -124,29 +124,16 @@ open class SwiftRegex: Sequence, IteratorProtocol {
         return (0...regex.numberOfCaptureGroups).map { targetString(match: match, group: $0) }
     }
 
-    open func nextMatch( options: NSRegularExpression.MatchingOptions? = nil ) -> NSTextCheckingResult? {
-        if let match = regex.firstMatch(in: target as String, options: options ?? SwiftRegex.defaultMatching, range: targetRange) {
-            targetRange.location = match.range.location + match.range.length
-            targetRange.length = target.length - targetRange.location
-            return match
-        }
-        targetRange = NSMakeRange(0, target.length)
-        return nil
-    }
-
-    public func groups( options: NSRegularExpression.MatchingOptions? = nil ) -> [String?]? {
-        if let match = nextMatch( options: options ) {
-            return targetStrings( match: match )
-        }
-        return nil
-    }
-
-    public func matchResults( options: NSRegularExpression.MatchingOptions? = nil ) -> [NSTextCheckingResult] {
+    open func matchResults( options: NSRegularExpression.MatchingOptions? = nil ) -> [NSTextCheckingResult] {
         return regex.matches( in: target as String, options: options ?? SwiftRegex.defaultMatching, range: targetRange )
     }
 
+    open func ranges( options: NSRegularExpression.MatchingOptions? = nil ) -> [NSRange] {
+        return matchResults( options: options ).map { $0.range }
+    }
+
     open func matches( options: NSRegularExpression.MatchingOptions? = nil ) -> [String] {
-        return matchResults( options: options ).map { targetString(match: $0, group: 0) ?? "" }
+        return matchResults( options: options ).map { targetString(match: $0, group: 0) ?? "nomatch" }
     }
 
     open func allGroups( options: NSRegularExpression.MatchingOptions? = nil ) -> [[String?]] {
@@ -161,6 +148,23 @@ open class SwiftRegex: Sequence, IteratorProtocol {
         return out
     }
 
+    open func nextMatch( options: NSRegularExpression.MatchingOptions? = nil ) -> NSTextCheckingResult? {
+        if let match = regex.firstMatch(in: target as String, options: options ?? SwiftRegex.defaultMatching, range: targetRange) {
+            targetRange.location = match.range.location + match.range.length
+            targetRange.length = target.length - targetRange.location
+            return match
+        }
+        targetRange = NSMakeRange(0, target.length)
+        return nil
+    }
+
+    open func nextGroups( options: NSRegularExpression.MatchingOptions? = nil ) -> [String?]? {
+        if let match = nextMatch( options: options ) {
+            return targetStrings( match: match )
+        }
+        return nil
+    }
+
     open subscript(group: Int) -> String? {
         return self[group, SwiftRegex.defaultMatching]
     }
@@ -172,6 +176,17 @@ open class SwiftRegex: Sequence, IteratorProtocol {
         return nil
     }
 
+    open subscript(groups: [Int]) -> [String?]? {
+        return self[groups, SwiftRegex.defaultMatching]
+    }
+
+    open subscript(groups: [Int], options: NSRegularExpression.MatchingOptions) -> [String?]? {
+        if let match = nextMatch(options: options) {
+            return groups.map { targetString(match: match, group: $0) }
+        }
+        return nil
+    }
+    
     open subscript(groups: Range<Int>) -> [String?]? {
         return self[groups, SwiftRegex.defaultMatching]
     }
@@ -183,13 +198,18 @@ open class SwiftRegex: Sequence, IteratorProtocol {
         return nil
     }
 
+    open func makeMutable() -> MutableRegex {
+        return MutableRegex(target: target, regex: regex)
+    }
+
     open subscript(template: String) -> String {
         return self[template, SwiftRegex.defaultMatching]
     }
 
     open subscript(template: String, options: NSRegularExpression.MatchingOptions) -> String {
-        MutableRegex(target: target, regex: regex) ~= template
-        return target as String
+        let mutable = makeMutable()
+        mutable ~= template
+        return mutable.target as String
     }
 
     open subscript(templates: [String]) -> String {
@@ -197,17 +217,19 @@ open class SwiftRegex: Sequence, IteratorProtocol {
     }
 
     open subscript(templates: [String], options: NSRegularExpression.MatchingOptions) -> String {
-        MutableRegex(target: target, regex: regex) ~= templates
-        return target as String
+        let mutable = makeMutable()
+        mutable ~= templates
+        return mutable.target as String
     }
-    
+
     open subscript(replacer: @escaping (String) -> String) -> String {
         return self[replacer, SwiftRegex.defaultMatching]
     }
 
     open subscript(replacer: @escaping (String) -> String, options: NSRegularExpression.MatchingOptions) -> String {
-        MutableRegex(target: target, regex: regex) ~= replacer
-        return target as String
+        let mutable = makeMutable()
+        mutable ~= replacer
+        return mutable.target as String
     }
 
     open subscript(replacer: @escaping ([String?]) -> String) -> String {
@@ -215,8 +237,9 @@ open class SwiftRegex: Sequence, IteratorProtocol {
     }
 
     open subscript(replacer: @escaping ([String?]) -> String, options: NSRegularExpression.MatchingOptions) -> String {
-        MutableRegex(target: target, regex: regex) ~= replacer
-        return target as String
+        let mutable = makeMutable()
+        mutable ~= replacer
+        return mutable.target as String
     }
 
     open var boolValue: Bool {
@@ -247,10 +270,10 @@ open class MutableRegex : SwiftRegex {
             }
         }
 
-        out.append( target.substring(with: NSRange(location:pos, length:targetRange.length-pos)) )
-        target.setString(out as String)
-        targetRange = NSMakeRange(0, target.length)
         if matched {
+            out.append( target.substring(with: NSRange(location:pos, length:targetRange.length-pos)) )
+            target.setString(out as String)
+            targetRange = NSMakeRange(0, target.length)
             fileRegex?.update()
         }
         return matched
@@ -423,8 +446,8 @@ open class FileRegex {
         return regex
     }
 
-    func update() {
+    open func update() {
         FileRegex.save( path: filepath, contents: contents )
     }
-    
+
 }

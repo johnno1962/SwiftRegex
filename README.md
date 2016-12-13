@@ -17,7 +17,7 @@ good idea to be able to write the following in code:
 
 	let input = "Now is the time for all good men to come to the aid of the party"
 
-	let words:[String] = input["(\\w+)"].matches()
+	let words: [String] = input["(\\w+)"].matches()
 
 	input["men"] = "people"
 
@@ -44,18 +44,16 @@ the first iteration is:
 	var output = input["men"] ~= "people"
 
 The input string is captured by reference so were it to be mutable the operation could
-be performed in place. A global function RegexMutable() is defined as shorthand to 
+be performed in place. A extension on String with the var mutable is defined as shorthand to 
 convert an input string into an NSMutableString under the covers so the above code
 can become:
 
-    func RegexMutable(string: NSString) -> NSMutableString {
-        return NSMutableString(string:string)
-    }
-
-	var mutable = RegexMutable( input )
+	var mutable = input.mutable
 	
 	mutable["men"] ~= "folk"
 	mutable["the party"] ~= "their country"
+
+    print(mutable)
 
 	// "Now is the time for all good folk to come to the aid of their country"
 	
@@ -66,10 +64,10 @@ You can use either version
 The SwiftRegex class defines a number of methods to get at all aspects of a match
 or matches in the input string:
 
+    ranges() -> [NSRange] // array of ranges of matches in string
 	matches() -> [String] // all matches in the string
-	ranges() -> [NSRange] // array of ranges of matches in string
-	groups() -> [String] // capture groups of first match
-	allGroups() -> [[String]] // all groups of all matches
+	allGroups() -> [[String?]] // all groups of all matches
+    nextGroups() -> [String?]? // capture groups of next match (advancing internal poointer)
 	
 The replacement string is a "template" an can contain "$N" expressions to refer to
 capture groups in the source regular expression:
@@ -116,6 +114,19 @@ Stop press:
 You can now regex a file directly e.g.
 
     RegexFile( "/path/to/file" )["pattern"] ~= "replacement"
+
+A regex is also a Sequence that can yield an iterator so the following now works:
+
+    for groups in myString["(\\w+)=(\\w+)"] {
+        print( "name=\(groups[1]!), value=\(groups[2]!)")
+    }
+
+Which is equivalent to:
+
+    my regex = myString["(\\w+)=(\\w+)"]
+    while let groups = regex.nextGroups() {
+        print( "name=\(groups[1]!), value=\(groups[2]!)")
+    }
 
 And apply replacements inline with chaining
 
