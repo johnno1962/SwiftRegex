@@ -5,7 +5,7 @@
 //  Created by John Holdsworth on 26/06/2014.
 //  Copyright (c) 2014-6 John Holdsworth.
 //
-//  $Id: //depot/SwiftRegex/SwiftRegex.swift#55 $
+//  $Id: //depot/SwiftRegex/SwiftRegex.swift#56 $
 //
 //  This code is in the public domain from:
 //  https://github.com/johnno1962/SwiftRegex
@@ -159,10 +159,7 @@ open class SwiftRegex: Sequence, IteratorProtocol {
     }
 
     open func nextGroups( options: NSRegularExpression.MatchingOptions? = nil ) -> [String?]? {
-        if let match = nextMatch( options: options ) {
-            return targetStrings( match: match )
-        }
-        return nil
+        return nextMatch( options: options ).flatMap { targetStrings( match: $0 ) }
     }
 
     open subscript(group: Int) -> String? {
@@ -170,10 +167,7 @@ open class SwiftRegex: Sequence, IteratorProtocol {
     }
 
     open subscript(group: Int, options: NSRegularExpression.MatchingOptions) -> String? {
-        if let match = nextMatch(options: options) {
-            return targetString(match: match, group: group)
-        }
-        return nil
+        return nextMatch(options: options).flatMap { targetString(match: $0, group: group) }
     }
 
     open subscript(groups: [Int]) -> [String?]? {
